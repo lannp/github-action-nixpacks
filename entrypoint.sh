@@ -41,7 +41,8 @@ repository_license() {
 }
 
 BUILD_CMD="nixpacks build $INPUT_CONTEXT"
-GHCR_IMAGE_NAME="ghcr.io/$GITHUB_REPOSITORY"
+GITHUB_REPOSITORY_LOWER=$(echo "$GITHUB_REPOSITORY" | tr '[:upper:]' '[:lower:]' | tr '.' '-')
+GHCR_IMAGE_NAME="ghcr.io/$GITHUB_REPOSITORY_LOWER"
 
 # add NIXPACKS_ prefixed environment variables to the build command
 # https://nixpacks.com/docs/configuration/environment
@@ -191,7 +192,7 @@ function build_and_push_multiple_architectures() {
 
 if [ "${#PLATFORMS[@]}" -gt 1 ]; then
   build_and_push_multiple_architectures
-else 
+else
   build_and_push
 fi
 
